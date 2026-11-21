@@ -131,7 +131,7 @@ export default function DailyEntry({ data, setData }: Props) {
   const manualTotal = record.teamSalesCents !== undefined;
 
   return (
-    <section className="content-card">
+    <section className="content-card mf-admin-daily">
       <div className="section-heading">
         <div>
           <span className="eyebrow">OPERAÇÃO DO DIA</span>

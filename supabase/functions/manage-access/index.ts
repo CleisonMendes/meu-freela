@@ -120,9 +120,38 @@ Deno.serve(async (req) => {
     }
 
     // 2) Daqui para baixo, só o dono.
-    const { data: me } = await admin
-      .from("app_users").select("access").eq("user_id", caller.id).maybeSingle();
-    if (me?.access !== "owner") return json({ error: "Só o dono pode gerenciar acessos." }, 403);
+    
+    // 2) Daqui para baixo, só o dono.
+    const { data: me, error: meError } = await admin
+      .from("app_users")
+      .select("access")
+      .eq("user_id", caller.id)
+      .maybeSingle();
+
+    if (meError) {
+      console.error("Erro ao consultar app_users:", {
+        code: meError.code,
+        message: meError.message,
+      });
+
+      return json({
+        error: "Falha ao verificar permissões no banco.",
+        code: meError.code,
+      }, 500);
+    }
+
+    if (!me) {
+      return json({
+        error: "Usuário autenticado sem cadastro em app_users."
+      }, 403);
+    }
+
+    if (me.access !== "owner") {
+      return json({
+        error: "Só o dono pode gerenciar acessos."
+      }, 403);
+    }
+
 
     // ---------- listar ----------
     if (body.action === "list") {

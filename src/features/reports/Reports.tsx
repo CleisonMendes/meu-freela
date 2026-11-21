@@ -67,7 +67,7 @@ export default function Reports({ data }: { data: AppData }) {
   const table = buildTable(kind, data, month, today);
 
   return (
-    <section className="content-card">
+    <section className="content-card mf-admin-reports">
       <div className="section-heading no-print">
         <div><span className="eyebrow">RELATÓRIOS</span><h3>{table.title}</h3>
           <p className="muted">Baseado nos fechamentos preservados de cada dia. Nenhum valor é estimado ou inventado.</p></div>

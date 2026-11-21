@@ -68,7 +68,7 @@ export default function AccessManager({ data }: { data: AppData }) {
 
   if (me.access !== "owner") {
     return (
-      <section className="content-card">
+      <section className="content-card mf-admin-access">
         <div className="empty-state">
           <KeyRound size={34} />
           <strong>Só o dono gerencia acessos</strong>
@@ -174,13 +174,19 @@ export default function AccessManager({ data }: { data: AppData }) {
   }
 
   return (
-    <section className="content-card">
+    <section className="content-card mf-admin-access">
       <div className="section-heading">
         <div>
           <span className="eyebrow">LOGINS DO SISTEMA</span>
           <h3>Acessos</h3>
           <p className="muted">Crie logins para gerentes e para quem lança o próprio dia. A Cozinha não tem login.</p>
         </div>
+      </div>
+
+      <div className="mf-admin-access-overview" aria-label="Resumo dos acessos">
+        <div className="mf-admin-mini-metric"><span>Logins cadastrados</span><strong>{rows.length}</strong><small>Perfis com acesso</small></div>
+        <div className="mf-admin-mini-metric"><span>Gerentes</span><strong>{rows.filter((row) => row.access === "manager").length}</strong><small>Gestão operacional</small></div>
+        <div className="mf-admin-mini-metric"><span>Integrantes</span><strong>{rows.filter((row) => row.access === "member").length}</strong><small>Acesso individual</small></div>
       </div>
 
       {error && (

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDownToLine, CalendarDays,
-  ClipboardList, HardHat, LayoutDashboard, Plus, ShieldCheck, Users, Wallet,
+  ClipboardList, HardHat, LayoutDashboard, Plus, ShieldCheck, Users, Wallet, Bell, FileClock,
   Pencil, Trash2, Search, History, X, UserRoundX, RotateCcw, LogOut, KeyRound,
 } from "lucide-react";
 import type { AppData, Role, TeamMember, TeamHistoryEvent } from "./types";
@@ -19,13 +19,27 @@ import { describeError, loadCloudData, saveCloudChanges } from "./services/cloud
 import "./auth/auth.css";
 import AccessManager from "./features/access/AccessManager";
 import MustChangeGate from "./auth/MustChangeGate";
+import Schedule from "./features/schedule/Schedule";
+import Portal from "./features/portal/Portal";
+import PaymentFollowUp from "./features/portal/PaymentFollowUp";
+import NotificationCenter from "./features/notifications/NotificationCenter";
+import OperationAudit from "./features/audit/OperationAudit";
+import "./features/mobile22.css";
+import "./features/premium22.css";
+import "./features/admin-suite.css";
+import "./features/admin-detail-224.css";
 
-type Section = "dashboard" | "team" | "daily" | "payments" | "reports" | "access";
+type Section = "notifications" | "audit" | "portal" | "my-payments" | "dashboard" | "team" | "schedule" | "daily" | "payments" | "reports" | "access";
 type TeamFilter = "active" | "inactive" | "all";
 
 const navigation: { id: Section; label: string; icon: typeof LayoutDashboard }[] = [
+  { id: "portal", label: "Meu espaço", icon: Users },
+  { id: "notifications", label: "Avisos", icon: Bell },
+  { id: "audit", label: "Auditoria", icon: FileClock },
+  { id: "my-payments", label: "Meus pagamentos", icon: Wallet },
   { id: "dashboard", label: "Visão geral", icon: LayoutDashboard },
   { id: "team", label: "Equipe", icon: Users },
+  { id: "schedule", label: "Escalas", icon: CalendarDays },
   { id: "daily", label: "Lançamento diário", icon: CalendarDays },
   { id: "payments", label: "Pagamentos", icon: Wallet },
   { id: "reports", label: "Relatórios", icon: ClipboardList },
@@ -61,7 +75,8 @@ export default function App() {
 function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: () => void }) {
   const staff = isStaff(me);
   const [data, setData] = useState<AppData>(() => (cloud ? EMPTY_DATA : loadAppData()));
-  const [ready, setReady] = useState(!cloud);
+  const memberPortal = cloud && me.access === "member";
+  const [ready, setReady] = useState(!cloud || memberPortal);
   const [loadError, setLoadError] = useState("");
   const [sync, setSync] = useState<SyncState>("saved");
   const [syncError, setSyncError] = useState("");
@@ -69,7 +84,7 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
   const synced = useRef(data);
   const queue = useRef<Promise<void>>(Promise.resolve());
   latest.current = data;
-  const [section, setSection] = useState<Section>("dashboard");
+  const [section, setSection] = useState<Section>(memberPortal ? "portal" : "dashboard");
   const [name, setName] = useState("");
   const [role, setRole] = useState<Role>("Garçom");
   const [showForm, setShowForm] = useState(false);
@@ -89,13 +104,14 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
 
   // Carga inicial da nuvem
   useEffect(() => {
-    if (!cloud) return;
+    if (!cloud || memberPortal) return;
     reload().then(() => setReady(true)).catch((error) => setLoadError(describeError(error)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cloud]);
 
   // Salvamento: local (navegador) ou nuvem (só as diferenças, em fila)
   useEffect(() => {
+    if (memberPortal) return;
     if (!cloud) {
       saveAppData(data);
       return;
@@ -122,7 +138,7 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
 
   // Atualiza sozinho (quando não há alterações pendentes) para ver o que os outros lançaram
   useEffect(() => {
-    if (!cloud || !ready) return;
+    if (!cloud || !ready || memberPortal) return;
     const refresh = () => {
       if (document.visibilityState === "visible" && latest.current === synced.current) {
         reload(true).catch(() => undefined);
@@ -279,11 +295,11 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
       <aside className="sidebar">
         <div className="brand">
           <div className="brand-mark"><HardHat size={22} /></div>
-          <div><strong>Meu Freela</strong><span>Dia 2.0</span></div>
+          <div><strong>Meu Freela</strong><span>Versão 2.2 Dev</span></div>
         </div>
         <div className="workspace-label">MENU PRINCIPAL</div>
         <nav>
-          {navigation.filter((item) => item.id !== "access" || (cloud && me.access === "owner")).map(({ id, label, icon: Icon }) => (
+          {navigation.filter((item) => memberPortal ? (item.id === "portal" || item.id === "schedule" || item.id === "my-payments" || item.id === "notifications") : (item.id !== "portal" && item.id !== "my-payments" && (item.id !== "access" || (cloud && me.access === "owner")) && (item.id !== "audit" || cloud))).map(({ id, label, icon: Icon }) => (
             <button key={id} className={`nav-item ${section === id ? "active" : ""}`} onClick={() => setSection(id)}>
               <Icon size={18} /><span>{label}</span>
             </button>
@@ -303,7 +319,7 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
         </div>
       </aside>
 
-      <main className="main-content">
+      <main className={`main-content ${staff ? "mf-admin-workspace" : ""}`}>
         <header className="topbar">
           <div><span className="eyebrow">CONTROLE DE FREELAS</span><h1>{navigation.find((item) => item.id === section)?.label}</h1></div>
           <div className="topbar-right"><span className="date-chip"><CalendarDays size={15} /> {new Date().toLocaleDateString("pt-BR")}</span><div className="avatar" title={me.email}>{cloud && me.email ? me.email.slice(0, 2).toUpperCase() : "MF"}</div></div>
@@ -316,15 +332,38 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
           </div>
         )}
 
-        {section === "dashboard" && <Dashboard data={data} setData={setData} />}
+        {section === "notifications" && cloud && <NotificationCenter />}
+        {section === "audit" && cloud && !memberPortal && <OperationAudit />}
 
-        {section === "team" && (
-          <section className="content-card">
+        {section === "portal" && memberPortal && <Portal me={me} goToSchedule={() => setSection("schedule")} goToPayments={() => setSection("my-payments")} />}
+
+        {section === "my-payments" && memberPortal && (
+          me.memberId ? (
+            <section className="content-card">
+              <div className="section-heading">
+                <div><span className="eyebrow">ÁREA DO FREELANCER</span><h3>Meus pagamentos</h3><p className="muted">Confira seus pagamentos registrados, confirme recebimentos e solicite correções.</p></div>
+              </div>
+              <PaymentFollowUp memberId={me.memberId} />
+            </section>
+          ) : (
+            <section className="content-card"><h3>Cadastro não vinculado</h3><p>Solicite ao dono o vínculo do seu login com um integrante da equipe.</p></section>
+          )
+        )}
+
+        {section === "dashboard" && !memberPortal && <Dashboard data={data} setData={setData} />}
+
+        {section === "team" && !memberPortal && (
+          <section className="content-card mf-admin-team">
             <div className="section-heading team-heading">
               <div><span className="eyebrow">CADASTRO E ORGANIZAÇÃO</span><h3>Equipe cadastrada</h3><p className="muted">{activeMembers.length} integrante(s) ativo(s) · {data.members.length} cadastro(s) no total</p></div>
               {staff && <button className="primary-button" onClick={openNewForm}><Plus size={17} /> Novo integrante</button>}
             </div>
 
+            <div className="mf-admin-team-overview" aria-label="Resumo da equipe">
+              <div className="mf-admin-mini-metric"><span>Integrantes cadastrados</span><strong>{data.members.length}</strong><small>Equipe do estabelecimento</small></div>
+              <div className="mf-admin-mini-metric"><span>Em atividade</span><strong>{activeMembers.length}</strong><small>Disponíveis para a operação</small></div>
+              <div className="mf-admin-mini-metric"><span>Inativos</span><strong>{data.members.length - activeMembers.length}</strong><small>Histórico preservado</small></div>
+            </div>
             <div className="team-tools">
               <div className="search-box"><Search size={16} /><input aria-label="Pesquisar funcionário" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar funcionário pelo nome..." /></div>
               <div className="team-filters" role="group" aria-label="Filtrar equipe">
@@ -380,11 +419,13 @@ function Workspace({ me, cloud, signOut }: { me: Me; cloud: boolean; signOut: ()
           </section>
         )}
 
-        {section === "daily" && <DailyEntry data={data} setData={setData} />}
+        {section === "schedule" && <Schedule me={me} members={memberPortal ? [] : data.members} />}
 
-        {section === "payments" && <Payments data={data} setData={setData} />}
+        {section === "daily" && !memberPortal && <DailyEntry data={data} setData={setData} />}
 
-        {section === "reports" && <Reports data={data} />}
+        {section === "payments" && !memberPortal && <Payments data={data} setData={setData} />}
+
+        {section === "reports" && !memberPortal && <Reports data={data} />}
 
         {section === "access" && cloud && me.access === "owner" && <AccessManager data={data} />}
         <footer>Meu Freela Dia 2.0 <span>•</span> Versão 0.5.0</footer>

@@ -12,6 +12,8 @@ import {
   paymentLines, summarizePayments, sumTotals,
 } from "../../lib/reports";
 import "./dashboard.css";
+import "./admin-premium.css";
+import AdvancedFinance from "./AdvancedFinance";
 
 interface Props {
   data: AppData;
@@ -86,7 +88,24 @@ export default function Dashboard({ data, setData }: Props) {
 
   return (
     <>
-      <section className="content-card">
+      <section className="admin-hero" aria-label="Resumo da operação">
+        <div className="admin-hero-copy">
+          <span className="admin-hero-kicker">VISÃO DA GESTÃO · MEU FREELA</span>
+          <h2>Seu estabelecimento, sob controle<span aria-hidden="true"> ✦</span></h2>
+          <p>Acompanhe o movimento da equipe, os ganhos e os pagamentos no período selecionado.</p>
+          <div className="admin-hero-chips">
+            <span>{days.length} dia(s) fechado(s)</span>
+            <span>{formatDate(range.from)} — {formatDate(range.to)}</span>
+          </div>
+        </div>
+        <div className="admin-hero-side" aria-label="Resumo financeiro do período">
+          <span>VENDAS NO PERÍODO</span>
+          <strong>{formatCents(totals.salesCents)}</strong>
+          <small>Equipe: {formatCents(totals.totalCents)} em ganhos</small>
+        </div>
+      </section>
+      <div className="admin-section-label"><span>OPERAÇÃO</span><h3>Indicadores e desempenho</h3></div>
+      <section className="content-card admin-period-panel">
         <div className="section-heading">
           <div>
             <span className="eyebrow">PAINEL</span>
@@ -113,7 +132,7 @@ export default function Dashboard({ data, setData }: Props) {
         )}
       </section>
 
-      <section className="stats-grid dashboard-stats">
+      <section className="stats-grid dashboard-stats admin-stat-grid">
         <StatCard label="Total vendido" value={formatCents(totals.salesCents)} hint="Vendas da equipe" />
         <StatCard label="Ganhos totais da equipe" value={formatCents(totals.totalCents)} hint="Conquistado, não necessariamente pago" />
         <StatCard label="Valores fixos" value={formatCents(totals.fixedCents)} hint="Diárias de quem trabalhou" />
@@ -126,7 +145,8 @@ export default function Dashboard({ data, setData }: Props) {
         <StatCard label="Pagamentos atrasados" value={formatCents(pay.overdueCents)} hint={`${pay.overdueCount} pagamento(s) vencido(s)`} />
       </section>
 
-      <section className="chart-grid">
+      <div className="admin-section-label admin-charts-heading"><span>ANÁLISE</span><h3>Evolução e composição</h3></div>
+      <section className="chart-grid admin-chart-grid">
         <div className="content-card"><h4>Evolução diária das vendas</h4><ColumnChart items={dailySales} format={formatCents} /></div>
         <div className="content-card"><h4>Evolução mensal dos ganhos</h4><ColumnChart items={monthly} format={formatCents} /></div>
         <div className="content-card">
@@ -151,6 +171,8 @@ export default function Dashboard({ data, setData }: Props) {
           <BarList items={waiters.map((w) => ({ label: w.name, value: w.salesCents }))} format={formatCents} />
         </div>
       </section>
+
+      {staff && <AdvancedFinance data={data} from={range.from} to={range.to} today={today} />}
 
       <section className="content-card">
         <div className="section-heading"><div><span className="eyebrow">COMPARATIVOS</span><h3>Ganhos mês a mês</h3>

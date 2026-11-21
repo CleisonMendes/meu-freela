@@ -6,6 +6,7 @@ import { formatCents } from "../../lib/money";
 import { formatDate, todayKey } from "../../lib/dates";
 import { STATUS_LABEL, paymentLines, summarizePayments, type PayLine, type PayStatus } from "../../lib/reports";
 import "./payments.css";
+import PaymentFollowUpAdmin from "./PaymentFollowUpAdmin";
 
 interface Props {
   data: AppData;
@@ -80,7 +81,7 @@ export default function Payments({ data, setData }: Props) {
   }
 
   return (
-    <section className="content-card">
+    <section className="content-card mf-admin-payments">
       <div className="section-heading">
         <div><span className="eyebrow">CONTROLE DE RECEBIMENTOS</span><h3>Pagamentos</h3>
           <p className="muted">Cada dia fechado gera o que cada pessoa tem a receber. Os pagamentos são confirmados manualmente e podem ser parciais.</p></div>
@@ -176,6 +177,7 @@ export default function Payments({ data, setData }: Props) {
           </table>
         </div>
       )}
+      {staff && <PaymentFollowUpAdmin />}
     </section>
   );
 }

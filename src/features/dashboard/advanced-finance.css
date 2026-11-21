@@ -1,0 +1,30 @@
+.af-root { margin-top: 18px; }
+.af-root h4 { font-size: 13px; margin: 18px 0 12px; color: inherit; }
+.af-toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0; }
+.af-toolbar label { color: #9aacc6; font-size: 12px; }
+.af-toolbar select { padding: 9px 11px; border: 1px solid #2a4161; border-radius: 8px; background: #0b1421; color: #eaf1ff; }
+.af-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+.af-stats > div { display: grid; gap: 7px; min-width: 0; padding: 15px; border: 1px solid #263b57; background: #122035; border-radius: 10px; }
+.af-stats span, .af-stats small { font-size: 11px; color: #9aacc6; }
+.af-stats strong { font-size: 20px; overflow-wrap: anywhere; }
+.af-disclaimer { font-size: 11px; color: #9aacc6; line-height: 1.6; }
+.af-sections { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; }
+.af-roles, .af-weeks { display: grid; gap: 12px; }
+.af-role > div:first-child { display: flex; gap: 8px; justify-content: space-between; flex-wrap: wrap; font-size: 12px; }
+.af-role small { color: #9aacc6; }
+.af-track { margin-top: 6px; width: 100%; height: 8px; background: #1b2c43; border-radius: 9px; overflow: hidden; }
+.af-track > div { height: 100%; background: #488def; border-radius: inherit; }
+.af-week { display: grid; grid-template-columns: 95px 1fr 155px; align-items: center; gap: 10px; font-size: 11px; }
+.af-week > small { text-align: right; color: #9aacc6; }
+.af-weekbars { display: grid; gap: 4px; }
+.af-weekbars > div { height: 8px; min-width: 0; border-radius: 5px; background: #488def; }
+.af-weekbars > div + div { background: #35c98a; }
+.af-legend { display: flex; gap: 15px; margin-top: 12px; font-size: 11px; color: #9aacc6; }
+.af-legend span:first-child { color: #488def; }
+.af-legend span + span { color: #35c98a; }
+.af-table-wrap { overflow-x: auto; }
+.af-table { width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
+.af-table th, .af-table td { padding: 11px 10px; border-bottom: 1px solid #263b57; text-align: left; }
+.af-table th { color: #9aacc6; font-weight: 600; }
+@media(max-width:1000px) { .af-stats { grid-template-columns: repeat(2,minmax(0,1fr)); } .af-sections { grid-template-columns: 1fr; } }
+@media(max-width:620px) { .af-stats { grid-template-columns: 1fr; } .af-week { grid-template-columns: 1fr; gap: 4px; } .af-week > small { text-align: left; } }

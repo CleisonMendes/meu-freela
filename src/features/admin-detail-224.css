@@ -1,0 +1,80 @@
+/* Meu Freela 2.2.4 — acabamento das áreas internas do painel da gestão.
+   Apenas CSS, não altera permissões, eventos, cálculos nem chamadas Supabase. */
+.mf-admin-workspace{--mf-gold:#f2c58e;--mf-rose:#9e527b;--mf-edge:rgba(232,203,190,.18);--mf-muted:#b5bfd0}
+/* Cabeçalhos menores internos e superfícies no mesmo tom do painel de abertura */
+.mf-admin-workspace :is(.mf-admin-schedule,.mf-admin-payments,.mf-admin-audit) h4,
+.mf-admin-workspace :is(.af-root,.admin-chart-grid,.goal-evolution) h4 {font-size:clamp(15px,1.4vw,19px);font-weight:750;letter-spacing:-.02em;color:#fae8df}
+.mf-admin-workspace :is(.mf-admin-schedule,.mf-admin-payments,.af-root,.mf-admin-audit) :is(input,select,textarea){min-height:42px;border:1px solid rgba(202,182,195,.32);background:#101a2d;border-radius:11px;color:#f5f1f4;padding:9px 12px;max-width:100%}
+.mf-admin-workspace :is(.mf-admin-schedule,.mf-admin-payments,.af-root,.mf-admin-audit) :is(input,select,textarea):focus-visible{outline:2px solid var(--mf-gold);outline-offset:2px}
+.mf-admin-workspace :is(.mf-admin-schedule,.mf-admin-payments,.mf-admin-audit) :is(label,small,.muted){line-height:1.55}
+/* ESCALAS: cards reais para disponibilidade, gestão e turnos */
+.mf-admin-workspace .mf-admin-schedule .schedule-columns{gap:18px;margin-top:20px;margin-bottom:20px;align-items:stretch}
+.mf-admin-workspace .mf-admin-schedule .schedule-panel{padding:clamp(19px,2.2vw,28px)!important;background:linear-gradient(140deg,#202d44,#19243a)!important;border-radius:20px!important;border:1px solid rgba(229,195,189,.2)!important;min-width:0}
+.mf-admin-workspace .mf-admin-schedule .schedule-panel:has(.schedule-requirement-form){background:linear-gradient(130deg,#28273f,#18263d)!important}
+.mf-admin-workspace .mf-admin-schedule .schedule-panel>h4{font-size:19px!important;margin:0 0 18px;padding-bottom:13px;border-bottom:1px solid var(--mf-edge)}
+.mf-admin-workspace .mf-admin-schedule .schedule-roles{gap:12px;margin-bottom:18px}
+.mf-admin-workspace .mf-admin-schedule .schedule-role{border:1px solid rgba(222,196,185,.18);border-top:3px solid var(--mf-gold);border-radius:15px;background:#152238;padding:16px;min-width:0}
+.mf-admin-workspace .mf-admin-schedule .schedule-role:nth-child(2){border-top-color:#8ab6ff}.mf-admin-workspace .mf-admin-schedule .schedule-role:nth-child(3){border-top-color:#72dab4}.mf-admin-workspace .mf-admin-schedule .schedule-role:nth-child(4){border-top-color:#be9dff}
+.mf-admin-workspace .mf-admin-schedule .schedule-requirement-form{border-top:1px solid var(--mf-edge);padding-top:19px;align-items:end;gap:14px}
+.mf-admin-workspace .mf-admin-schedule .schedule-entry{display:flex;align-items:center;gap:13px;min-height:75px;padding:14px 12px;border:1px solid rgba(209,182,198,.15);background:#142238;border-radius:13px;margin-bottom:10px;flex-wrap:wrap}
+.mf-admin-workspace .mf-admin-schedule .schedule-entry>span{flex:1;min-width:120px;display:grid;gap:4px}.mf-admin-workspace .mf-admin-schedule .schedule-entry strong{font-size:14px;color:#fff}.mf-admin-workspace .mf-admin-schedule .schedule-entry small{font-size:11px;color:#b9c5d5}
+.mf-admin-workspace .mf-admin-schedule .schedule-entry button{min-height:36px;white-space:nowrap}
+.mf-admin-workspace .mf-admin-schedule .schedule-form{display:grid;gap:15px;align-content:start}
+.mf-admin-workspace .mf-admin-schedule .schedule-multi-days{gap:7px}
+.mf-admin-workspace .mf-admin-schedule .schedule-multi-days label{background:#101c2f;border:1px solid #35425c;border-radius:10px;min-height:55px;padding:7px;display:flex;gap:3px;align-items:center;justify-content:center;flex-direction:column}
+.mf-admin-workspace .mf-admin-schedule .schedule-multi-days input{min-height:0;width:auto;accent-color:#edbd83}
+.mf-admin-workspace .mf-admin-schedule .schedule-form .primary-button,.mf-admin-workspace .mf-admin-schedule .schedule-requirement-form .primary-button{background:linear-gradient(100deg,#9b4b78,#c07884);color:#fff;min-height:43px;border-radius:11px;font-weight:700}
+.mf-admin-workspace .mf-admin-schedule .mf22-tool-grid>div{padding:19px!important;background:#152238!important}.mf-admin-workspace .mf-admin-schedule .mf22-bulk-edit{border-top:1px solid var(--mf-edge);margin-top:18px;padding-top:18px}
+/* PAGAMENTOS: formulário de previsões em grade, cards de acompanhamento e respostas legíveis */
+.mf-admin-workspace .mf-admin-payments .pflow{border:1px solid rgba(234,196,180,.22)!important;border-radius:22px!important;background:linear-gradient(140deg,#222940,#171f33)!important;padding:clamp(18px,2.5vw,30px)!important;box-shadow:0 18px 45px rgba(0,0,0,.1)}
+.mf-admin-workspace .mf-admin-payments .pflow-heading{padding:0 0 18px;border-bottom:1px solid var(--mf-edge);margin-bottom:18px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.mf-admin-workspace .mf-admin-payments .pflow-heading h4{font-size:19px;margin:0;color:#ffe7d6}
+.mf-admin-workspace .mf-admin-payments .pflow-editor{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px 18px!important;max-width:none!important;background:#111e32;border:1px solid var(--mf-edge);padding:20px;border-radius:17px;margin:22px 0}
+.mf-admin-workspace .mf-admin-payments .pflow-editor label{display:grid;gap:6px;min-width:0;font-size:12px;color:#bec7d6}.mf-admin-workspace .mf-admin-payments .pflow-editor :is(input,select){width:100%!important;max-width:100%!important}
+.mf-admin-workspace .mf-admin-payments .pflow-editor>.primary-button{grid-column:1/-1;justify-self:start;min-width:180px;min-height:42px;background:var(--mf-gold);color:#392038;border-radius:11px;font-weight:750}
+.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:22px 0}
+.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis article{border:1px solid var(--mf-edge);border-top:3px solid #79dcb9;background:linear-gradient(155deg,#1c2b40,#142137);padding:19px;border-radius:16px;min-width:0;display:grid;gap:10px}
+.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis article:nth-child(2){border-top-color:#f0c58f}.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis article:nth-child(3){border-top-color:#9bb6ff}.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis article:nth-child(4){border-top-color:#ed90a3}
+.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis small{color:#b9c2d4;font-size:11px}.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis strong{font-size:clamp(20px,2vw,28px);letter-spacing:-.04em}
+.mf-admin-workspace .mf-admin-payments .pflow-row{border:1px solid var(--mf-edge);border-radius:12px;background:#131f32;padding:16px 18px;margin:9px 0;display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap}
+.mf-admin-workspace .mf-admin-payments .pflow-row>div{min-width:0;display:grid;gap:6px;flex:1}.mf-admin-workspace .mf-admin-payments .pflow-row small{color:#b8c4d7;overflow-wrap:anywhere}
+.mf-admin-workspace .mf-admin-payments .mf22-followup-filter{display:flex;justify-content:space-between;gap:15px;align-items:end;margin:30px 0 15px;border-top:1px solid var(--mf-edge);padding-top:21px}
+/* VISÃO GERAL: acabamento inferior de análise, comparativos, metas e histórico */
+.mf-admin-workspace .af-root,.mf-admin-workspace .af-root ~ .content-card{border-radius:22px;background:linear-gradient(145deg,#1b263b,#121e32);border:1px solid var(--mf-edge);padding:clamp(18px,2.3vw,28px);margin-top:23px}
+.mf-admin-workspace .af-root>.section-heading,.mf-admin-workspace .af-root ~ .content-card>.section-heading{padding-bottom:18px;margin-bottom:16px;border-bottom:1px solid var(--mf-edge)}
+.mf-admin-workspace .af-stats>div{padding:21px!important;min-height:108px;border:1px solid var(--mf-edge);border-top:3px solid #91b5ff;border-radius:16px;background:#18263e}
+.mf-admin-workspace .af-stats>div:nth-child(2){border-top-color:#76dfb5}.mf-admin-workspace .af-stats>div:nth-child(3){border-top-color:#ecc18d}.mf-admin-workspace .af-stats>div:nth-child(4){border-top-color:#f092ad}
+.mf-admin-workspace .af-stats strong{font-size:clamp(20px,2vw,28px)}
+.mf-admin-workspace .af-sections{gap:18px;margin-top:21px}.mf-admin-workspace .af-sections>div{background:#142239;border:1px solid var(--mf-edge);padding:22px;border-radius:17px;min-width:0}
+.mf-admin-workspace .af-track{height:10px}.mf-admin-workspace .af-track>div{background:linear-gradient(90deg,#8c4b74,#e2b583)}.mf-admin-workspace .af-table th{background:#25283f;color:#f1cfb8}
+.mf-admin-workspace .af-table th,.mf-admin-workspace .af-table td{padding:14px 12px;border-color:var(--mf-edge)}
+.mf-admin-workspace .af-table tbody tr:nth-child(even){background:rgba(221,187,177,.045)}
+.mf-admin-workspace .compare-grid{gap:13px;margin-top:19px}.mf-admin-workspace .compare-grid>div{padding:20px!important;min-height:99px;border:1px solid var(--mf-edge);border-top:3px solid #e3b583;border-radius:16px;background:#17243a;display:grid;align-content:space-between;gap:10px}
+.mf-admin-workspace .compare-grid>div:nth-child(4n + 2){border-top-color:#84b9ff}.mf-admin-workspace .compare-grid>div:nth-child(4n + 3){border-top-color:#72dcb7}.mf-admin-workspace .compare-grid>div strong{font-size:clamp(17px,1.7vw,23px);letter-spacing:-.025em}
+.mf-admin-workspace .goal-track{height:10px;border-radius:20px;background:#263751;overflow:hidden}.mf-admin-workspace .goal-fill{height:100%;background:linear-gradient(90deg,#9d547c,#f4c88f);border-radius:inherit}
+.mf-admin-workspace .goal-evolution{margin:23px 0;padding:22px;border:1px solid var(--mf-edge);border-radius:17px;background:#16243a;display:grid;gap:15px}
+.mf-admin-workspace .goal-history-title{font-size:17px;color:#f0c58b;margin:0;padding:17px 16px 7px}
+.mf-admin-workspace .af-root ~ .content-card .daily-table-wrap{border:1px solid var(--mf-edge);border-radius:15px;overflow-x:auto;background:#111e32}
+.mf-admin-workspace .af-root ~ .content-card .daily-table thead{background:#29283f}.mf-admin-workspace .af-root ~ .content-card .daily-table th{color:#f6d9ba;padding:14px}.mf-admin-workspace .af-root ~ .content-card .daily-table td{padding:14px;border-color:var(--mf-edge)}
+/* AUDITORIA: mesmo cabeçalho premium do restante, indicadores e timeline */
+.mf-admin-workspace .mf-admin-audit{padding:0!important;border:1px solid var(--mf-edge);border-radius:23px;overflow:hidden;background:linear-gradient(145deg,#18263b,#111c2e)}
+.mf-admin-workspace .mf-admin-audit>.section-heading{position:relative;padding:36px 32px;min-height:158px;margin:0;background:radial-gradient(circle at 88% 0%,rgba(255,211,156,.2),transparent 28%),linear-gradient(110deg,#52263e,#352841 62%,#1b293f);border-bottom:1px solid rgba(245,200,154,.2)}
+.mf-admin-workspace .mf-admin-audit>.section-heading h3{font-size:clamp(26px,3vw,35px);font-weight:800;letter-spacing:-.04em;color:#fff}.mf-admin-workspace .mf-admin-audit>.section-heading .eyebrow{color:#ffd9a5;letter-spacing:2px}
+.mf-admin-workspace .mf-admin-audit>.section-heading .muted{color:#f0dce3}
+.mf-admin-workspace .mf-admin-audit>:not(.section-heading){margin-left:clamp(18px,2.5vw,30px);margin-right:clamp(18px,2.5vw,30px)}
+.mf-admin-workspace .mf-audit-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:24px;margin-bottom:22px}
+.mf-admin-workspace .mf-audit-overview>div{padding:20px;display:grid;gap:7px;border:1px solid var(--mf-edge);border-top:3px solid #ecc18d;border-radius:16px;background:#1b283e}
+.mf-admin-workspace .mf-audit-overview>div:nth-child(2){border-top-color:#9ab6ff}.mf-admin-workspace .mf-audit-overview>div:nth-child(3){border-top-color:#7fe0b9}.mf-admin-workspace .mf-audit-overview>div:nth-child(4){border-top-color:#c59efa}
+.mf-admin-workspace .mf-audit-overview small{font-size:11px;color:#c3c8d4}.mf-admin-workspace .mf-audit-overview strong{font-size:clamp(24px,2.3vw,35px);letter-spacing:-.04em}.mf-admin-workspace .mf-audit-overview span{font-size:11px;color:#9faec1}
+.mf-admin-workspace .mf-admin-audit>label{display:grid;gap:8px;max-width:340px;margin-top:10px;margin-bottom:20px;font-size:12px;color:#d4c9d6}
+.mf-admin-workspace .mf-admin-audit>label select{width:100%}
+.mf-admin-workspace .mf22-audit-list{display:grid;gap:12px;margin-bottom:28px;padding-left:18px;border-left:2px solid rgba(231,186,154,.24)}
+.mf-admin-workspace .mf22-audit-list article{border:1px solid var(--mf-edge);border-left:3px solid #d2a47d;border-radius:14px;background:#152237;padding:17px 19px;display:grid;gap:7px;overflow-wrap:anywhere}
+.mf-admin-workspace .mf22-audit-list article strong{color:#f7e9df;font-size:14px}.mf-admin-workspace .mf22-audit-list article small{font-size:11px;color:#b5c0d1}
+.mf-admin-workspace .mf22-audit-list article code{background:#0c1727;border-radius:9px;color:#ced9e7;max-width:100%;padding:10px;font-size:11px}
+.mf-admin-workspace .mf-audit-empty{border:1px dashed rgba(238,201,165,.35);border-radius:16px;background:#172338;padding:35px 20px;text-align:center;display:grid;justify-items:center;gap:9px}.mf-admin-workspace .mf-audit-empty strong{color:#f3cfaa;font-size:17px}.mf-admin-workspace .mf-audit-empty p{max-width:480px}
+/* Breakpoints de operação e acessibilidade */
+@media(max-width:1100px){.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis,.mf-admin-workspace .mf-audit-overview{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.mf-admin-workspace .mf-admin-payments .pflow-editor{grid-template-columns:1fr!important}.mf-admin-workspace .mf-admin-schedule .schedule-columns,.mf-admin-workspace .af-sections{grid-template-columns:1fr}.mf-admin-workspace .mf-admin-audit>.section-heading{padding:24px 19px}.mf-admin-workspace .af-root,.mf-admin-workspace .af-root ~ .content-card{padding:18px}}
+@media(max-width:480px){.mf-admin-workspace .mf-admin-payments .mf22-payment-kpis,.mf-admin-workspace .mf-audit-overview{grid-template-columns:1fr}.mf-admin-workspace .mf-admin-schedule .schedule-panel{padding:17px!important}.mf-admin-workspace .mf-admin-payments .pflow{padding:16px!important}.mf-admin-workspace .mf-admin-payments .mf22-followup-filter{flex-direction:column;align-items:stretch}}
+@media(prefers-reduced-motion:reduce){.mf-admin-workspace *{scroll-behavior:auto!important}}
