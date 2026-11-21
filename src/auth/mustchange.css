@@ -1,0 +1,5 @@
+.mc-form { display: grid; gap: 12px; margin-top: 14px; }
+.mc-form label { display: grid; gap: 6px; }
+.mc-form .mc-toggle { justify-self: start; }
+.mc-error { color: #ff8a80; font-size: 0.9rem; margin: 0; }
+.mc-actions { display: flex; gap: 8px; flex-wrap: wrap; }

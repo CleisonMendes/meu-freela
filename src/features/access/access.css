@@ -1,0 +1,36 @@
+/* Garante uma coluna só: o .member-form/.enhanced-form do styles.css usa 2 colunas e é carregado depois deste arquivo. */
+.member-form.access-form { grid-template-columns: 1fr; }
+
+.access-form { display: grid; gap: 12px; }
+.access-form .access-row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.access-pass { display: flex; gap: 8px; align-items: flex-end; }
+.access-pass label { flex: 1; }
+.access-hint { font-size: 0.85rem; opacity: 0.75; margin: 0; }
+
+.access-secret {
+  border: 1px solid rgba(80, 200, 140, 0.5);
+  background: rgba(80, 200, 140, 0.1);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 14px 0;
+  display: grid;
+  gap: 6px;
+}
+.access-secret code { font-size: 1rem; user-select: all; }
+.access-secret .access-secret-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+.access-list { display: grid; gap: 8px; margin-top: 16px; }
+.access-item {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 10px; padding: 12px 14px;
+}
+.access-item-info { display: grid; gap: 2px; min-width: 0; }
+.access-item-info strong { overflow-wrap: anywhere; }
+.access-item-info span { font-size: 0.85rem; opacity: 0.75; }
+.access-item-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.access-form .access-check { display: flex; flex-direction: row; align-items: center; gap: 8px; }
+.access-form .access-check input { width: auto; }
+.access-secret .access-mail { margin: 0; font-weight: 600; }
+.access-pending { color: #f0b429; }

@@ -1,0 +1,6 @@
+/* Campos nativos no tema escuro: lista de opções, seletor de data e barras de rolagem. */
+:root { color-scheme: dark; }
+select, input, textarea { color-scheme: dark; }
+select option, select optgroup { background-color: #0f1928; color: #e8edf7; }
+select option:checked { background-color: #1d3453; color: #ffffff; }
+select option:disabled { color: #71839c; }

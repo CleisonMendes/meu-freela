@@ -1,0 +1,13 @@
+.env.example                              ← NOVO (na raiz, ao lado do package.json) ok
+src/
+├── App.tsx                               ← SUBSTITUIR ok
+├── lib/supabase.ts                       ← NOVO ok
+├── auth/                                 ← pasta nova ok
+│   ├── access.ts   AuthGate.tsx   auth.css   ← NOVOS ok
+├── services/                             (já existe, ao lado do storage.ts)
+│   ├── cloudMap.ts   cloud.ts            ← NOVOS ok
+└── features/
+    ├── daily/DailyEntry.tsx              ← SUBSTITUIR ok
+    ├── payments/Payments.tsx             ← SUBSTITUIR ok 
+    └── dashboard/Dashboard.tsx           ← SUBSTITUIR ok 
+tests/cloudmap.test.ts                    ← NOVO ok

@@ -1,0 +1,32 @@
+
+# Dependências
+node_modules/
+
+# Arquivos de compilação
+dist/
+build/
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+!.env.example
+
+# Arquivos de log
+*.log
+npm-debug.log*
+
+# Backups locais
+*backup*.json
+*preview*.json
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Configurações locais do editor
+.vscode/*
+!.vscode/extensions.json

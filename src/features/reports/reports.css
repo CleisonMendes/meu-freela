@@ -1,0 +1,16 @@
+.report-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.report-actions .subtle-button { display: inline-flex; align-items: center; gap: 6px; padding: 9px 12px; font-size: 12px; }
+.print-only { display: none; }
+
+@media print {
+  .sidebar, .topbar, footer, .no-print { display: none !important; }
+  .app-shell { display: block; }
+  :root, body { background: #fff !important; color: #000 !important; }
+  .main-content { max-width: none; padding: 0; }
+  .content-card, .stat-card { color: #000 !important; background: #fff !important; border: 0 !important; padding: 0 !important; }
+  .print-only { display: block; margin-bottom: 14px; }
+  .print-only h2 { margin: 0 0 4px; font-size: 18px; }
+  .print-only p { margin: 0; color: #444; font-size: 12px; }
+  .daily-table th, .daily-table td { color: #000 !important; border-bottom: 1px solid #bbb !important; white-space: normal; font-size: 10px; padding: 5px 4px; }
+  .muted, .eyebrow { color: #444 !important; }
+}
