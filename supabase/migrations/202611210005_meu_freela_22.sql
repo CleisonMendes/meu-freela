@@ -49,7 +49,11 @@ CREATE OR REPLACE FUNCTION public.log_workflow_change() RETURNS trigger
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
 DECLARE v_actor uuid := auth.uid(); v_member uuid; v_id uuid; v_action text; v_details jsonb := '{}'::jsonb;
 BEGIN
- v_id := COALESCE(NEW.id, OLD.id);
+ IF TG_OP = 'DELETE' THEN
+  v_id := OLD.id;
+ELSE
+  v_id := NEW.id;
+END IF;
  v_member := CASE WHEN TG_OP = 'DELETE' THEN OLD.member_id ELSE NEW.member_id END;
  v_action := CASE WHEN TG_OP='INSERT' THEN 'created' WHEN TG_OP='DELETE' THEN 'deleted' ELSE 'updated' END;
  IF TG_TABLE_NAME = 'payments' THEN
